@@ -119,14 +119,10 @@ public class DangKy extends JDialog{
             
             //mới thêm vào , nhớ test lại nha
             if("".equals(tfHoTen.getText())){
-                tfHoTen.selectAll();
-                tfHoTen.requestFocus();
                 JOptionPane.showMessageDialog(null,"Nhập lại học tên", "Thông báo", JOptionPane.WARNING_MESSAGE);
             }
             
             if("".equals(tfUserName.getText())){
-                tfUserName.selectAll();
-                tfUserName.requestFocus();
                 JOptionPane.showMessageDialog(null,"Nhập lại tên đăng nhập", "Thông báo", JOptionPane.WARNING_MESSAGE);
             }
             
