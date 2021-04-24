@@ -20,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,6 +32,7 @@ public class DangKy extends JDialog{
     private JTextField tfUserName, tfHoTen, tfNgaySinh, tfEmail;
     private JPasswordField pwfPw, repwfPw;
     private JButton btnXacNhan, btnNhapLai;
+    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
     public DangKy(JFrame parent, boolean modal) {
         super(parent, modal);
