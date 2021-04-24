@@ -112,6 +112,43 @@ public class DangKy extends JDialog{
 
     private void handle() {
         btnXacNhan.addActionListener(ae -> {
+            
+            //mới thêm vào , nhớ test lại nha
+            if("".equals(tfHoTen.getText())){
+                tfHoTen.selectAll();
+                tfHoTen.requestFocus();
+                JOptionPane.showMessageDialog(null,"Nhập lại học tên", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                }
+            
+            if("".equals(tfUserName.getText())){
+                tfUserName.selectAll();
+                tfUserName.requestFocus();
+                JOptionPane.showMessageDialog(null,"Nhập lại tên đăng nhập", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            }
+            
+            if("".equals(pwfPw.getText())){
+                pwfPw.selectAll();
+                pwfPw.requestFocus();
+                JOptionPane.showMessageDialog(null,"Nhập lại mật khẩu", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            }
+            
+            if(repwfPw.getText() == null ? pwfPw.getText() != null : !repwfPw.getText().equals(pwfPw.getText())){
+                repwfPw.selectAll();
+                repwfPw.requestFocus();
+                JOptionPane.showMessageDialog(null,"Nhập lại xác nhận mật khẩu", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                }
+            
+            df.setLenient(false); // set false để kiểm tra tính hợp lệ của date. VD: tháng 2 phải có 28-29 ngày, năm có 12 tháng,....
+            try{
+                df.parse(tfNgaySinh.getText());
+            }catch(ParseException ex){
+                tfNgaySinh.selectAll();
+                tfNgaySinh.requestFocus();
+                JOptionPane.showMessageDialog(null,"Ngày sinh không hợp lệ", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            }
+            df.format(tfNgaySinh.getText());
+            // hết
+            
             this.dispose();
         });
         btnNhapLai.addActionListener(ae -> {
