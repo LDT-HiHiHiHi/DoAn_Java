@@ -138,7 +138,7 @@ public class DangKy extends JDialog{
                     if(!repwfPw.getText().equals(pwfPw.getText())){
                         repwfPw.selectAll();
                         repwfPw.requestFocus();
-                        JOptionPane.showMessageDialog(null,"Xác nhập mật khẩu sai", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null,"Xác nhận mật khẩu sai", "Thông báo", JOptionPane.WARNING_MESSAGE);
                     }
                 }
             }
