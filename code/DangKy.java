@@ -119,11 +119,11 @@ public class DangKy extends JDialog{
             
             //mới thêm vào
              if("".equals(tfHoTen.getText())){
-                JOptionPane.showMessageDialog(null,"Nhập diền họ tên", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Vui lòng điền họ tên", "Thông báo", JOptionPane.WARNING_MESSAGE);
                 }
             
             if("".equals(tfUserName.getText())){
-                JOptionPane.showMessageDialog(null,"Nhập điền tên đăng nhập", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Vui lòng điền tên đăng nhập", "Thông báo", JOptionPane.WARNING_MESSAGE);
             }
             
             if("".equals(pwfPw.getText())){
@@ -142,14 +142,7 @@ public class DangKy extends JDialog{
                     }
                 }
             }
-            df.setLenient(false); // set false để kiểm tra tính hợp lệ của date. VD: tháng 2 phải có 28-29 ngày, năm có 12 tháng,....
-            try{
-                df.parse(tfNgaySinh.getText());
-            }catch(ParseException ex){
-                tfNgaySinh.selectAll();
-                tfNgaySinh.requestFocus();
-                JOptionPane.showMessageDialog(null,"Ngày sinh không hợp lệ", "Thông báo", JOptionPane.WARNING_MESSAGE);
-            }
+            
             df.format(tfNgaySinh.getText());
             // hết
             
