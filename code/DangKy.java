@@ -116,11 +116,6 @@ public class DangKy extends JDialog{
 
     private void handle() {
         btnXacNhan.addActionListener(ae -> {
-            
-            //mới thêm vào
-             
-            
-            
             this.dispose();
         });
         btnNhapLai.addActionListener(ae -> {
