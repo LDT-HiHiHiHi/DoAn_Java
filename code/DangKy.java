@@ -118,33 +118,8 @@ public class DangKy extends JDialog{
         btnXacNhan.addActionListener(ae -> {
             
             //mới thêm vào
-             if("".equals(tfHoTen.getText())){
-                JOptionPane.showMessageDialog(null,"Vui lòng điền họ tên", "Thông báo", JOptionPane.WARNING_MESSAGE);
-                }
+             
             
-            if("".equals(tfUserName.getText())){
-                JOptionPane.showMessageDialog(null,"Vui lòng điền tên đăng nhập", "Thông báo", JOptionPane.WARNING_MESSAGE);
-            }
-            
-            if("".equals(pwfPw.getText())){
-                pwfPw.selectAll();
-                pwfPw.requestFocus();
-                JOptionPane.showMessageDialog(null,"Vui lòng nhập mật khẩu", "Thông báo", JOptionPane.WARNING_MESSAGE);
-            }
-            else{
-                if("".equals(repwfPw.getText()))
-                    JOptionPane.showMessageDialog(null,"Vui lòng nhập xác nhập mật khẩu", "Thông báo", JOptionPane.WARNING_MESSAGE);
-                else{
-                    if(!repwfPw.getText().equals(pwfPw.getText())){
-                        repwfPw.selectAll();
-                        repwfPw.requestFocus();
-                        JOptionPane.showMessageDialog(null,"Xác nhận mật khẩu sai", "Thông báo", JOptionPane.WARNING_MESSAGE);
-                    }
-                }
-            }
-            
-            df.format(tfNgaySinh.getText());
-            // hết
             
             this.dispose();
         });
