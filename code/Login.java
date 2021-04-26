@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  * @author Admin
  */
 public class Login extends JFrame{
-    
+
     private JTextField tfUsername;
     private JPasswordField tfPassword;
     private JButton btnDN, btnDK;
@@ -42,51 +42,51 @@ public class Login extends JFrame{
         btnDN = new JButton("Đăng Nhập");
         btnDK = new JButton("Đăng Ký");
         showPassword = new JCheckBox("Show Password");
-        
+
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setSize(450, 300);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        
+
         Container con = getContentPane();
         con.setLayout(new BorderLayout());
-        
-        
+
+
         JPanel pnTitle = new JPanel(new FlowLayout());
         JLabel lbTitle = new JLabel("Login");
         lbTitle.setFont(new Font("Tahoma", Font.BOLD, 46));
         lbTitle.setForeground(Color.CYAN);
         pnTitle.add(lbTitle);
         pnTitle.setPreferredSize(new Dimension(0, 90));
-        
+
         JPanel pnContent = new JPanel();
         pnContent.setLayout(new BoxLayout(pnContent, BoxLayout.Y_AXIS));
-        
+
         JPanel pnUsername = new JPanel(new FlowLayout());
         JLabel lbUsername = new JLabel("Username:   ");
         pnUsername.add(lbUsername);
         pnUsername.add(tfUsername);
-        
+
         JPanel pnPassword = new JPanel(new FlowLayout());
         JLabel lbPassword = new JLabel("Password:   ");
         pnPassword.add(lbPassword);
         pnPassword.add(tfPassword);
-        
+
         JPanel pnResPass = new JPanel(new FlowLayout());
         showPassword.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnResPass.add(showPassword);
-        
+
         pnContent.add(pnUsername);
         pnContent.add(pnPassword);
         pnContent.add(pnResPass);
-        
+
         JPanel pnFooter = new JPanel(new FlowLayout());
         btnDK.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnDN.setCursor(new Cursor(Cursor.HAND_CURSOR));
         pnFooter.add(btnDN);
         pnFooter.add(btnDK);
         pnFooter.setPreferredSize(new Dimension(0, 60));
-        
+
         // set background
         pnTitle.setBackground(Color.WHITE);
         pnUsername.setBackground(Color.WHITE);
@@ -94,7 +94,7 @@ public class Login extends JFrame{
         pnFooter.setBackground(Color.WHITE);
         pnResPass.setBackground(Color.WHITE);
         showPassword.setBackground(Color.WHITE);
-        
+
         con.add(pnTitle, BorderLayout.PAGE_START);
         con.add(pnContent, BorderLayout.CENTER);
         con.add(pnFooter, BorderLayout.PAGE_END);
@@ -102,7 +102,7 @@ public class Login extends JFrame{
 
     private void handle() {
         btnDN.addActionListener(ae -> {
-            
+
         });
         btnDK.addActionListener(ae -> {
             new DangKy(this, true).setVisible(true);
@@ -114,8 +114,8 @@ public class Login extends JFrame{
             if (showPassword.isSelected())
                 tfPassword.setEchoChar((char)0);
             else tfPassword.setEchoChar('•');
-            
+
         });
     }
-    
+
 }
