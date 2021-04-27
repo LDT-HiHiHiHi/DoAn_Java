@@ -11,6 +11,10 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.*;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.BufferedWriter;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -19,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Admin
@@ -47,6 +52,7 @@ public class Login extends JFrame{
         this.setSize(450, 300);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage(Main.iconImage));
 
         Container con = getContentPane();
         con.setLayout(new BorderLayout());
@@ -100,9 +106,85 @@ public class Login extends JFrame{
         con.add(pnFooter, BorderLayout.PAGE_END);
     }
 
-    private void handle() {
-        btnDN.addActionListener(ae -> {
+    private void checkLogin() {
+        String username = tfUsername.getText().trim();
+        String pwd = tfPassword.getText().trim();
 
+        String u = "admin";
+        String p = "1234";
+
+        if(username.equals("") || pwd.equals("")) {
+            if(pwd.equals(""))
+                tfPassword.requestFocus();
+            if(username.equals(""))
+                tfUsername.requestFocus();
+            JOptionPane.showMessageDialog(null, "Hãy nhập đủ thông tin đăng nhập", "Thông Báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // xử lý kiểm tra đăng nhập
+        if(!username.equals(u) || !pwd.equals(p)) {
+            JOptionPane.showMessageDialog(null, "Thông tin đăng nhập không chính xác", "Thông Báo", JOptionPane.WARNING_MESSAGE);
+            tfUsername.requestFocus();
+            tfUsername.selectAll();
+            return;
+        }
+        try {
+          FileOutputStream fos = new FileOutputStream("saoLuuDangNhap.txt");
+          OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+          BufferedWriter bw = new BufferedWriter(osw);
+          bw.write(username+"-"+pwd);
+          bw.close();
+          osw.close();
+          fos.close();
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+
+        new DanhBa_GUI().setVisible(true);
+        dispose();
+    }
+
+    private void handle() {
+        tfUsername.addKeyListener(new KeyListener(){
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                    checkLogin();
+                }
+            }
+        });
+        tfPassword.addKeyListener(new KeyListener(){
+
+          @Override
+          public void keyTyped(KeyEvent e) {
+
+          }
+
+          @Override
+          public void keyReleased(KeyEvent e) {
+
+          }
+
+          @Override
+          public void keyPressed(KeyEvent e) {
+            if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+              checkLogin();
+            }
+          }
+        });
+        btnDN.addActionListener(ae -> {
+            checkLogin();
         });
         btnDK.addActionListener(ae -> {
             new DangKy(this, true).setVisible(true);
