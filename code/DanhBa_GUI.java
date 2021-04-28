@@ -10,42 +10,154 @@ import java.awt.FlowLayout;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.Dimension;
+import java.awt.event.*;
+import java.awt.Event;
+import java.awt.Color;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.BufferedWriter;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
+import javax.swing.JList;
+import javax.swing.JComboBox;
+import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
+import javax.swing.DefaultListModel;
+import javax.swing.event.*;
+import javax.swing.KeyStroke;
+
 /**
  *
  * @author Admin
  */
 public class DanhBa_GUI extends JFrame {
+    private JComboBox cboNhomLH;
+    private JList lstDanhBa;
+    private JMenu mnuLogout;
+    private JMenuItem mnuISaoLuu, mnuIKhoiPhuc;
+    private JLabel lbFooter;
 
     public DanhBa_GUI() {
         super("Chương trình quản lý danh bạ");
         initComponents();
+        handle();
     }
 
     public void initComponents() {
-        this.setSize(600, 450);
+        this.setSize(400, 450);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage(Main.iconImage));
+        this.setResizable(false);
+
         Container con = this.getContentPane();
         con.setLayout(new BorderLayout());
 
         JMenuBar mnuBar = new JMenuBar();
-        JMenu mnufile = new JMenu("File");
-        JMenuItem mnuISave
-        con.setJMenuBar(mnuBar);
 
-        JPanel pnTitle = new JPanel(new FlowLayout());
-        pnTitle.setPreferredSize(new Dimension(0, 50));
+        JMenu mnuTools = new JMenu("Tools");
+
+        mnuLogout = new JMenu("Logout");
+
+        mnuISaoLuu = new JMenuItem("Sao Lưu       ");
+        mnuISaoLuu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK | Event.SHIFT_MASK));
+
+        mnuIKhoiPhuc = new JMenuItem("Khôi Phục       ");
+        mnuIKhoiPhuc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.CTRL_MASK | Event.SHIFT_MASK));
+
+        mnuTools.add(mnuISaoLuu);
+        mnuTools.add(new JSeparator());
+        mnuTools.add(mnuIKhoiPhuc);
+
+        mnuBar.add(mnuTools);
+        mnuBar.add(mnuLogout);
+        this.setJMenuBar(mnuBar);
+
+        String[] nhomLH = {
+            "Gia Đình",
+            "Bạn bè",
+            "Đồng Nghiệp"
+        };
+        JPanel pnTitle = new JPanel();
+        pnTitle.setLayout(new BoxLayout(pnTitle, BoxLayout.Y_AXIS));
+        pnTitle.setPreferredSize(new Dimension(0, 75));
+        pnTitle.setBackground(Color.WHITE);
+
         JLabel lbTitle = new JLabel("Danh Bạ");
         lbTitle.setFont(new Font("Arial", Font.BOLD, 30));
+
+        JPanel pnNhomLH = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        pnNhomLH.setBackground(Color.WHITE);
+        cboNhomLH = new JComboBox(nhomLH);
+        cboNhomLH.setSelectedIndex(0);
+        pnNhomLH.add(cboNhomLH);
+
         pnTitle.add(lbTitle);
+        pnTitle.add(pnNhomLH);
+
+        String[] danhBa = {
+            "Nguyễn Văn A",
+            "Trần Văn C",
+            "Gia Cát Lượng"
+        };
+        JPanel pnContent = new JPanel();
+        pnContent.setBackground(Color.WHITE);
+        lstDanhBa = new JList(danhBa);
+        lstDanhBa.setCellRenderer(new PhoneBookListRenderer());
+        JScrollPane scrollLstDanhBa = new JScrollPane(lstDanhBa, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollLstDanhBa.setPreferredSize(new Dimension(392, 270));
+        scrollLstDanhBa.setBorder(new EmptyBorder(0, 5, 0, 5));
+        pnContent.add(scrollLstDanhBa);
+
+        JPanel pnFooter = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        lbFooter = new  JLabel("UserName |");
+        pnFooter.add(lbFooter);
 
         con.add(pnTitle, BorderLayout.PAGE_START);
+        con.add(pnContent, BorderLayout.CENTER);
+        con.add(pnFooter, BorderLayout.PAGE_END);
+    }
+    public void handle() {
+        JFrame thisFrame = this;
+
+        mnuLogout.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                try {
+                  FileOutputStream fos = new FileOutputStream(Main.saoLuuDangNhap);
+                  OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+                  BufferedWriter bw = new BufferedWriter(osw);
+
+                  bw.write("");
+
+                  bw.close();
+                  osw.close();
+                  fos.close();
+                  new Login().setVisible(true);
+                  thisFrame.dispose();
+                } catch(Exception e) {
+
+                }
+            }
+        });
+
+        lstDanhBa.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                JList list = (JList)evt.getSource();
+                new ThongTinDanhBa(thisFrame, true).setVisible(true);
+            }
+        });
+
+        lbFooter.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                new ThongTinCaNhan(thisFrame, true).setVisible(true);
+            }
+        });
     }
 }

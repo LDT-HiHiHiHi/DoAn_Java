@@ -10,10 +10,13 @@ package qldb;
  * @author Admin
  */
 public class Main {
-    public static String iconImage = "icon.png";
+    public static String iconImage = "image/icon.png";
+    public static String personImage = "/image/person.png";
+    public static String saoLuuDangNhap = "saoLuuDangNhap.txt";
+
     public static void main(String[] args) {
         try {
-            java.io.FileInputStream fis = new java.io.FileInputStream("saoLuuDangNhap.txt");
+            java.io.FileInputStream fis = new java.io.FileInputStream(Main.saoLuuDangNhap);
             java.io.InputStreamReader isr = new java.io.InputStreamReader(fis, "UTF-8");
             java.io.BufferedReader br = new java.io.BufferedReader(isr);
             String thongTinDangNhap = br.readLine();
@@ -27,7 +30,8 @@ public class Main {
             isr.close();
             fis.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            new Login().setVisible(true);
+            // e.printStackTrace();
         }
     }
 }

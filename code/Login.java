@@ -129,7 +129,7 @@ public class Login extends JFrame{
             return;
         }
         try {
-          FileOutputStream fos = new FileOutputStream("saoLuuDangNhap.txt");
+          FileOutputStream fos = new FileOutputStream(Main.saoLuuDangNhap);
           OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
           BufferedWriter bw = new BufferedWriter(osw);
           bw.write(username+"-"+pwd);
@@ -196,7 +196,6 @@ public class Login extends JFrame{
             if (showPassword.isSelected())
                 tfPassword.setEchoChar((char)0);
             else tfPassword.setEchoChar('•');
-
         });
     }
 
