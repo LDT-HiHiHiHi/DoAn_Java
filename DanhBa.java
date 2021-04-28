@@ -17,7 +17,6 @@ public class DanhBa {
    private Date NgayLuu;
    private NhomLienHe NLH;
    private DangNhap dn;
-   private Vector<SaoLuu> dssl = new Vector<SaoLuu>();
     /**
      * @return the msDB
      */
@@ -128,22 +127,8 @@ public class DanhBa {
      */
     public void setDn(DangNhap dn) {
         this.dn = dn;
-    }
+    } 
 
-    /**
-     * @return the dssl
-     */
-    public Vector<SaoLuu> getDssl() {
-        return dssl;
-    }
-
-    /**
-     * @param dssl the dssl to set
-     */
-    public void setDssl(Vector<SaoLuu> dssl) {
-        this.dssl = dssl;
-    }
-    
     public DanhBa() {
     }
 
@@ -159,11 +144,5 @@ public class DanhBa {
     @Override
     public String toString() {
         return this.tenLH; //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public void themSaoLuu(SaoLuu sl){
-        dssl.add(sl);
-        sl.setDb(this);
-        
     }
 }
