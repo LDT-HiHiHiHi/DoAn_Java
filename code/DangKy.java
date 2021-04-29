@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.event.*;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -45,12 +46,20 @@ public class DangKy extends JDialog {
     private void initComponents() {
 
         Dimension sizeBoxInput = new Dimension(200, 30);
-        tfUserName = new JTextField();
-        pwfPw = new JPasswordField();
-        repwfPw = new JPasswordField();
-        tfHoTen = new JTextField();
-        tfNgaySinh = new JTextField();
-        tfEmail = new JTextField();
+        tfUserName = new JTextField("username");
+        pwfPw = new JPasswordField("password");
+        repwfPw = new JPasswordField("password");
+        tfHoTen = new JTextField("Nhập họ tên");
+        tfNgaySinh = new JTextField("Nhập ngày sinh: dd/mm/yyyy");
+        tfEmail = new JTextField("Nhập email: abc@example.com");
+
+        tfUserName.setForeground(Color.LIGHT_GRAY);
+        tfHoTen.setForeground(Color.LIGHT_GRAY);
+        tfNgaySinh.setForeground(Color.LIGHT_GRAY);
+        tfEmail.setForeground(Color.LIGHT_GRAY);
+        pwfPw.setForeground(Color.LIGHT_GRAY);
+        repwfPw.setForeground(Color.LIGHT_GRAY);
+
         btnXacNhan = new JButton("Xác nhận");
         btnNhapLai = new JButton("Nhập lại");
         btnQuayLai = new JButton("Quay lại");
@@ -183,6 +192,108 @@ public class DangKy extends JDialog {
     }
 
     private void handle() {
+        tfUserName.addFocusListener(new FocusListener(){
+            @Override
+            public void focusLost(FocusEvent e) {
+              if(tfUserName.getText().equals("")) {
+                  tfUserName.setText("username");
+                  tfUserName.setForeground(Color.LIGHT_GRAY);
+              }
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(tfUserName.getText().equals("username")) {
+                    tfUserName.setText("");
+                    tfUserName.setForeground(Color.BLACK);
+                }
+            }
+        });
+        tfHoTen.addFocusListener(new FocusListener(){
+            @Override
+            public void focusLost(FocusEvent e) {
+              if(tfHoTen.getText().equals("")) {
+                  tfHoTen.setText("Nhập họ tên");
+                  tfHoTen.setForeground(Color.LIGHT_GRAY);
+              }
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(tfHoTen.getText().equals("Nhập họ tên")) {
+                    tfHoTen.setText("");
+                    tfHoTen.setForeground(Color.BLACK);
+                }
+            }
+        });
+        tfEmail.addFocusListener(new FocusListener(){
+            @Override
+            public void focusLost(FocusEvent e) {
+              if(tfEmail.getText().equals("")) {
+                  tfEmail.setText("Nhập email: abc@example.com");
+                  tfEmail.setForeground(Color.LIGHT_GRAY);
+              }
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(tfEmail.getText().equals("Nhập email: abc@example.com")) {
+                    tfEmail.setText("");
+                    tfEmail.setForeground(Color.BLACK);
+                }
+            }
+        });
+        tfNgaySinh.addFocusListener(new FocusListener(){
+            @Override
+            public void focusLost(FocusEvent e) {
+              if(tfNgaySinh.getText().equals("")) {
+                  tfNgaySinh.setText("Nhập ngày sinh: dd/mm/yyyy");
+                  tfNgaySinh.setForeground(Color.LIGHT_GRAY);
+              }
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(tfNgaySinh.getText().equals("Nhập ngày sinh: dd/mm/yyyy")) {
+                    tfNgaySinh.setText("");
+                    tfNgaySinh.setForeground(Color.BLACK);
+                }
+            }
+        });
+        pwfPw.addFocusListener(new FocusListener(){
+            @Override
+            public void focusLost(FocusEvent e) {
+              if(pwfPw.getText().equals("")) {
+                  pwfPw.setText("password");
+                  pwfPw.setForeground(Color.LIGHT_GRAY);
+              }
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(pwfPw.getText().equals("password")) {
+                    pwfPw.setText("");
+                    pwfPw.setForeground(Color.BLACK);
+                }
+            }
+        });
+        repwfPw.addFocusListener(new FocusListener(){
+            @Override
+            public void focusLost(FocusEvent e) {
+              if(repwfPw.getText().equals("")) {
+                  repwfPw.setText("password");
+                  repwfPw.setForeground(Color.LIGHT_GRAY);
+              }
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(repwfPw.getText().equals("password")) {
+                    repwfPw.setText("");
+                    repwfPw.setForeground(Color.BLACK);
+                }
+            }
+        });
         btnXacNhan.addActionListener(ae -> {
             boolean kt = true;
 
@@ -236,7 +347,7 @@ public class DangKy extends JDialog {
             }
 
             // kiểm tra nhập username
-            if(tfUserName.getText().trim().equals("")){
+            if(tfUserName.getText().trim().equals("") || tfUserName.getText().equals("username")){
                 kt = false;
                 lbErrUserName.setText("Vui lòng điền tên đăng nhập");
                 tfUserName.selectAll();
@@ -246,7 +357,7 @@ public class DangKy extends JDialog {
                 lbErrUserName.setText(" ");
 
             // kiểm tra nhập họ tên
-            if(tfHoTen.getText().trim().equals("")){
+            if(tfHoTen.getText().trim().equals("") || tfHoTen.getText().equals("Nhập họ tên")){
                 kt = false;
                 lbErrHoten.setText("Vui lòng điền họ tên");
                 tfHoTen.selectAll();
