@@ -42,8 +42,12 @@ public class Login extends JFrame{
     }
 
     private void initComponents() {
-        tfUsername = new JTextField(20);
-        tfPassword = new JPasswordField(20);
+        tfUsername = new JTextField("username", 20);
+        tfPassword = new JPasswordField("password", 20);
+
+        tfUsername.setForeground(Color.LIGHT_GRAY);
+        tfPassword.setForeground(Color.LIGHT_GRAY);
+
         btnDN = new JButton("Đăng Nhập");
         btnDK = new JButton("Đăng Ký");
         showPassword = new JCheckBox("Show Password");
@@ -145,6 +149,40 @@ public class Login extends JFrame{
     }
 
     private void handle() {
+        tfUsername.addFocusListener(new FocusListener(){
+            @Override
+            public void focusLost(FocusEvent e) {
+              if(tfUsername.getText().equals("")) {
+                  tfUsername.setText("username");
+                  tfUsername.setForeground(Color.LIGHT_GRAY);
+              }
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(tfUsername.getText().equals("username")) {
+                    tfUsername.setText("");
+                    tfUsername.setForeground(Color.BLACK);
+                }
+            }
+        });
+        tfPassword.addFocusListener(new FocusListener(){
+            @Override
+            public void focusLost(FocusEvent e) {
+              if(tfPassword.getText().equals("")) {
+                  tfPassword.setText("password");
+                  tfPassword.setForeground(Color.LIGHT_GRAY);
+              }
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(tfPassword.getText().equals("password")) {
+                    tfPassword.setText("");
+                    tfPassword.setForeground(Color.BLACK);
+                }
+            }
+        });
         tfUsername.addKeyListener(new KeyListener(){
 
             @Override
