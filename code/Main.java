@@ -11,7 +11,7 @@ package qldb;
  */
 public class Main {
     public static String iconImage = "image/icon.png";
-    public static String personImage = "/image/person.png";
+    public static String personImage = "image/person.png";
     public static String saoLuuDangNhap = "saoLuuDangNhap.txt";
 
     public static void main(String[] args) {

@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -20,11 +21,15 @@ class PhoneBookListRenderer extends DefaultListCellRenderer {
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-        label.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(Main.personImage)).getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT)));
 
         label.setHorizontalTextPosition(JLabel.RIGHT);
         label.setFont(font);
         label.setBorder(new EmptyBorder(5, 5, 0, 5));
+        
+        Image imageIcon = new ImageIcon(Main.personImage).getImage();
+        Image icon = imageIcon.getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(icon));
+
 
         return label;
     }

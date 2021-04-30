@@ -50,7 +50,7 @@ public class DanhBa_GUI extends JFrame {
         handle();
     }
 
-    public void initComponents() {
+    private void initComponents() {
         this.setSize(400, 450);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -124,7 +124,7 @@ public class DanhBa_GUI extends JFrame {
         con.add(pnContent, BorderLayout.CENTER);
         con.add(pnFooter, BorderLayout.PAGE_END);
     }
-    public void handle() {
+    private void handle() {
         JFrame thisFrame = this;
 
         mnuLogout.addMouseListener(new MouseAdapter() {

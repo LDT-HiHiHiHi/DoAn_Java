@@ -226,8 +226,10 @@ public class Login extends JFrame{
         });
         btnDK.addActionListener(ae -> {
             new DangKy(this, true).setVisible(true);
-            this.tfPassword.setText("");
-            this.tfUsername.setText("");
+            this.tfPassword.setText("password");
+            this.tfUsername.setText("username");
+            this.tfPassword.setForeground(Color.LIGHT_GRAY);            
+            this.tfUsername.setForeground(Color.LIGHT_GRAY);
             this.tfUsername.requestFocus();
         });
         showPassword.addActionListener(ae -> {

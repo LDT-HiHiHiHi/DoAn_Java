@@ -11,13 +11,7 @@ public class NguoiDung {
     private String maNguoiDung, tenDN, hoTen, email;
     private Date ngaySinh;
 
-    public NguoiDung() {
-      this.maNguoiDung = "";
-      this.tenDN = "";
-      this.ngaySinh = "1/1/1990";
-      this.hoTen = "";
-      this.email = "";
-    }
+    
     
 
     @Override

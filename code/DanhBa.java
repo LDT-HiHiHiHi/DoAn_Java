@@ -10,10 +10,6 @@ public class DanhBa {
 
 
     public DanhBa() { }
-    public DanhBa(String maNguoiDung, String sdt, String hoTen, String email, String ghiChu) {
-      this.maNguoiDung = maNguoiDung;
-      // lấy data từ csdl
-
-    }
+    
 
 }
