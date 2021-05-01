@@ -5,6 +5,7 @@
  */
 package qldb;
 
+
 /**
  *
  * @author Admin
@@ -24,7 +25,7 @@ public class Main {
                 new Login().setVisible(true);
             else {
                 String[] splitThongTin = thongTinDangNhap.split("-");
-                new DanhBa_GUI().setVisible(true);
+                new DanhBa_GUI(splitThongTin[0]).setVisible(true);
             }
             br.close();
             isr.close();
@@ -34,4 +35,17 @@ public class Main {
             // e.printStackTrace();
         }
     }
+    
+    // debug sql
+//    public static void main(String[] args) {
+//        try {
+//            SQLServerProvider provider = new SQLServerProvider();
+//            provider.open();
+//            System.out.print("thành công");
+//            provider.close();
+//        } catch(Exception e) {
+//             e.printStackTrace();
+//        }
+//    }
+    
 }

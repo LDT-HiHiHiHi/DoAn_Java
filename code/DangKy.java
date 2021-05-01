@@ -7,7 +7,6 @@ package qldb;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.event.*;
@@ -34,7 +33,6 @@ public class DangKy extends JDialog {
     private JTextField tfUserName, tfHoTen, tfNgaySinh, tfEmail;
     private JPasswordField pwfPw, repwfPw;
     private JButton btnXacNhan, btnNhapLai, btnQuayLai;
-    //thêm
     private JLabel lbErrUserName,lbErrHoten,lbErrPw,lbErrRepPw,lbErrNgaySinh,lbErrEmail;
 
     public DangKy(JFrame parent, boolean modal) {
@@ -295,8 +293,15 @@ public class DangKy extends JDialog {
             }
         });
         btnXacNhan.addActionListener(ae -> {
+            // kiểm tra nhập ngày sinh
+            String kieuDinhDang = "dd/MM/yyyy";
+            SimpleDateFormat df = new SimpleDateFormat(kieuDinhDang);
+            df.setLenient(false); // set false để kiểm tra tính hợp lệ của date. VD: tháng 2 phải có 28-29 ngày, năm có 12 tháng,....
+            
+            SQLServerProvider provider = new SQLServerProvider();
+            provider.open();
             boolean kt = true;
-
+            
             // kiểm tra nhập email
             if(!isValidEmail(tfEmail.getText())) {
                 kt = false;
@@ -305,10 +310,7 @@ public class DangKy extends JDialog {
                 tfEmail.requestFocus();
             } else lbErrEmail.setText(" ");
 
-            // kiểm tra nhập ngày sinh
-            String kieuDinhDang = "dd/MM/yyyy";
-            SimpleDateFormat df = new SimpleDateFormat(kieuDinhDang);
-            df.setLenient(false); // set false để kiểm tra tính hợp lệ của date. VD: tháng 2 phải có 28-29 ngày, năm có 12 tháng,....
+            
             try {
                 df.parse(tfNgaySinh.getText());
                 lbErrNgaySinh.setText(" ");
@@ -330,7 +332,7 @@ public class DangKy extends JDialog {
                 lbErrPw.setText(" ");
                 if(repwfPw.getText().trim().equals("")){
                     kt = false;
-                    lbErrRepPw.setText("Vui lòng nhập xác nhập mật khẩu");
+                    lbErrRepPw.setText("Vui lòng nhập xác nhập lại mật khẩu");
                     repwfPw.selectAll();
                     repwfPw.requestFocus();
                 }
@@ -353,8 +355,16 @@ public class DangKy extends JDialog {
                 tfUserName.selectAll();
                 tfUserName.requestFocus();
             }
-            else
-                lbErrUserName.setText(" ");
+            else {
+                if(provider.isUId(tfUserName.getText().trim())) {
+                    kt = false;
+                    lbErrUserName.setText("Tên đăng nhập đã tồn tại");
+                    tfUserName.selectAll();
+                    tfUserName.requestFocus();
+                } else                    
+                    lbErrUserName.setText(" ");
+            }
+                
 
             // kiểm tra nhập họ tên
             if(tfHoTen.getText().trim().equals("") || tfHoTen.getText().equals("Nhập họ tên")){
@@ -365,8 +375,19 @@ public class DangKy extends JDialog {
             } else
                 lbErrHoten.setText(" ");
 
-            if(kt == true)
+            if(kt == true) {
+                String insertThongTinCaNhan = "INSERT INTO THONGTIN_NGUOIDUNG(TENND,EMAIL,NGAYSINH)"+
+                                          "VALUES(N'"+tfHoTen.getText().trim()+"','"+tfEmail.getText().trim()+"','"+tfNgaySinh.getText().trim()+"')";
+                String insertDN = "INSERT INTO DANGNHAP(TENDANGNHAP,MATKHAU)"+
+                                              "VALUES('"+tfUserName.getText().trim()+"','"+pwfPw.getText().trim()+"')";
+                
+                provider.executeUpdate(insertThongTinCaNhan);
+                provider.executeUpdate(insertDN);
+                String updateMaNDN_CaNhan = "UPDATE THONGTIN_NGUOIDUNG SET MANDN='"+provider.getMaNDN(tfUserName.getText().trim())+"'"+
+                                            " WHERE MAND=(SELECT TOP(1) MAND FROM THONGTIN_NGUOIDUNG ORDER BY MAND DESC)";
+                provider.executeUpdate(updateMaNDN_CaNhan);
                 this.dispose();
+            }
         });
         btnNhapLai.addActionListener(ae -> {
             tfUserName.setText("");
