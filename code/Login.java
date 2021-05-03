@@ -114,9 +114,6 @@ public class Login extends JFrame{
         String username = tfUsername.getText().trim();
         String pwd = tfPassword.getText().trim();
 
-        String u = "admin";
-        String p = "1234";
-
         if(username.equals("") || pwd.equals("")) {
             if(pwd.equals(""))
                 tfPassword.requestFocus();
@@ -126,26 +123,39 @@ public class Login extends JFrame{
             return;
         }
         // xử lý kiểm tra đăng nhập
-        if(!username.equals(u) || !pwd.equals(p)) {
+        SQLServerProvider provider = new SQLServerProvider();
+        provider.open();
+        boolean ckDN = provider.isDangNhap(username, pwd);
+        provider.close();
+        if(!ckDN) {
             JOptionPane.showMessageDialog(null, "Thông tin đăng nhập không chính xác", "Thông Báo", JOptionPane.WARNING_MESSAGE);
             tfUsername.requestFocus();
             tfUsername.selectAll();
             return;
         }
         try {
-          FileOutputStream fos = new FileOutputStream(Main.saoLuuDangNhap);
-          OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
-          BufferedWriter bw = new BufferedWriter(osw);
-          bw.write(username+"-"+pwd);
-          bw.close();
-          osw.close();
-          fos.close();
+            FileOutputStream fos = new FileOutputStream(Main.saoLuuDangNhap);
+            OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+            BufferedWriter bw = new BufferedWriter(osw);
+            bw.write(username+"-"+pwd);
+            bw.close();
+            osw.close();
+            fos.close();
+            
+            java.io.FileInputStream fis = new java.io.FileInputStream(Main.saoLuuDangNhap);
+            java.io.InputStreamReader isr = new java.io.InputStreamReader(fis, "UTF-8");
+            java.io.BufferedReader br = new java.io.BufferedReader(isr);
+            String thongTinDangNhap = br.readLine();
+            br.close();
+            isr.close();
+            fis.close();
+            
+            String[] splitThongTin = thongTinDangNhap.split("-");
+            new DanhBa_GUI(splitThongTin[0]).setVisible(true);
+            dispose();
         } catch(Exception e) {
           e.printStackTrace();
         }
-
-        new DanhBa_GUI().setVisible(true);
-        dispose();
     }
 
     private void handle() {
